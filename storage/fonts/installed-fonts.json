@@ -1,0 +1,16 @@
+{
+    "noto sans jp": {
+        "normal": "\/home\/psacaree\/public_html\/core\/storage\/fonts\/noto_sans_jp_normal_0f7006ef5aa22dc4b2394b75774b9d61",
+        "bold": "noto_sans_jp_bold_9951ef107282261e261156a1cc4b0d10",
+        "600": "\/home\/eskm8456\/public_html\/lpk\/storage\/fonts\/noto_sans_jp_600_2776eb6349f0588612ecad1649e1e591"
+    },
+    "arial narrow": {
+        "normal": "arial_narrow_normal_b1f807ac36b197b25f7533cf5314f257"
+    },
+    "hind": {
+        "600": "hind_600_bc81f82a2e3af8dd87592999f9331832"
+    },
+    "sawarabi mincho": {
+        "normal": "sawarabi_mincho_normal_10e7f37406651cdff896225f755f749e"
+    }
+}

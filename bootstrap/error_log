@@ -1,0 +1,28 @@
+[02-Feb-2024 06:06:42 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/eskm8456/public_html/lpk/bootstrap/app.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/eskm8456/public_html/lpk/bootstrap/app.php on line 14
+[02-Feb-2024 06:06:42 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/eskm8456/public_html/lpk/bootstrap/app.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/eskm8456/public_html/lpk/bootstrap/app.php on line 14
+[02-Feb-2024 06:06:42 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/eskm8456/public_html/lpk/bootstrap/app.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/eskm8456/public_html/lpk/bootstrap/app.php on line 14
+[02-Feb-2024 06:06:48 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/eskm8456/public_html/lpk/bootstrap/app.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/eskm8456/public_html/lpk/bootstrap/app.php on line 14
+[02-Feb-2024 06:08:54 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/eskm8456/public_html/lpk/bootstrap/app.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/eskm8456/public_html/lpk/bootstrap/app.php on line 14
+[02-Feb-2024 06:09:01 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/eskm8456/public_html/lpk/bootstrap/app.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/eskm8456/public_html/lpk/bootstrap/app.php on line 14
+[02-Feb-2024 06:09:09 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/eskm8456/public_html/lpk/bootstrap/app.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/eskm8456/public_html/lpk/bootstrap/app.php on line 14
