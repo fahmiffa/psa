@@ -33,7 +33,8 @@ class Participant extends Controller
 
     public function study()
     {
-        $head = Head::where('participant', Auth::user()->id)->where('status', '!=', 1)->first();
+        // $head = Head::where('participant', Auth::user()->id)->where('status', '!=', 1)->first();
+        $head = Head::where('participant', Auth::user()->id)->whereNull('japan')->latest()->first();
 
         if ($head) {
             return redirect()->route('daftar.index', ['id' => md5($head->id)]);

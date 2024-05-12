@@ -314,7 +314,7 @@
             @isset($item->ibu)
                 @php  $ibu = $item->ibu; @endphp
                 <div class="form-group row mb-3">
-                    <label class="text-Captitalize">Ibu</label>
+                    <label class="text-capitalize">Ibu</label>
                     <input type="hidden" name="status[]" class="form-control" value="ibu">
                     @for ($i = 0; $i < count($ibu); $i++)
                         <div class="col-md-3">
@@ -330,7 +330,7 @@
             @isset($item->kaka)
                 @php  $kaka = $item->kaka; @endphp
                 <div class="form-group row mb-3">
-                    <label class="text-Captitalize">kaka</label>
+                    <label class="text-capitalize">kaka</label>
                     <input type="hidden" name="status[]" class="form-control" value="kaka">
                     @for ($i = 0; $i < count($kaka); $i++)
                         <div class="col-md-3">
@@ -346,7 +346,7 @@
             @isset($item->adik)
                 @php  $adik = $item->adik; @endphp
                 <div class="form-group row mb-3">
-                    <label class="text-Captitalize">adik</label>
+                    <label class="text-capitalize">adik</label>
                     <input type="hidden" name="status[]" class="form-control" value="adik">
                     @for ($i = 0; $i < count($adik); $i++)
                         <div class="col-md-3">
@@ -362,7 +362,7 @@
             @isset($item->ayah)
                 @php  $ayah = $item->ayah; @endphp
                 <div class="form-group row mb-3">
-                    <label class="text-Captitalize">ayah</label>
+                    <label class="text-capitalize">ayah</label>
                     <input type="hidden" name="status[]" class="form-control" value="ayah">
                     @for ($i = 0; $i < count($ayah); $i++)
                         <div class="col-md-3">
@@ -378,7 +378,7 @@
             @isset($item->suami)
                 @php  $suami = $item->suami; @endphp
                 <div class="form-group row mb-3">
-                    <label class="text-Captitalize">suami</label>
+                    <label class="text-capitalize">suami</label>
                     <input type="hidden" name="status[]" class="form-control" value="suami">
                     @for ($i = 0; $i < count($suami); $i++)
                         <div class="col-md-3">
@@ -394,7 +394,7 @@
             @isset($item->istri)
                 @php  $istri = $item->istri; @endphp
                 <div class="form-group row mb-3">
-                    <label class="text-Captitalize">istri</label>
+                    <label class="text-capitalize">istri</label>
                     <input type="hidden" name="status[]" class="form-control" value="istri">
                     @for ($i = 0; $i < count($istri); $i++)
                         <div class="col-md-3">
@@ -410,7 +410,7 @@
             @isset($item->wali)
                 @php  $wali = $item->wali; @endphp
                 <div class="form-group row mb-3">
-                    <label class="text-Captitalize">wali</label>
+                    <label class="text-capitalize">wali</label>
                     <input type="hidden" name="status[]" class="form-control" value="wali">
                     @for ($i = 0; $i < count($wali); $i++)
                         <div class="col-md-3">
@@ -830,6 +830,36 @@
             </div>
         </div>
 
+        <div class="form-group row mb-3">
+            <label class="col-md-4">S2</label>
+            <div class="col-md-4">
+                <input class="form-control" name="s2" type="file" accept=".jpg, .jpeg, .png">
+                @error('s2')
+                    <div class='small text-danger text-left'>{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="col-md-4">
+                @if ($da->file->s2)
+                    <img src="{{ asset('storage/' . $da->file->s2) }}" class="w-25">
+                @endif
+            </div>
+        </div>
+
+        <div class="form-group row mb-3">
+            <label class="col-md-4">S3</label>
+            <div class="col-md-4">
+                <input class="form-control" name="s3" type="file" accept=".jpg, .jpeg, .png">
+                @error('s3')
+                    <div class='small text-danger text-left'>{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="col-md-4">
+                @if ($da->file->s3)
+                    <img src="{{ asset('storage/' . $da->file->s3) }}" class="w-25">
+                @endif
+            </div>
+        </div>
+
         <div class="my-3 d-flex justify-content-start">
             <button class="btn btn-primary btn-block w-25 rounded-pill">Save</button>
         </div>
@@ -857,7 +887,7 @@
                 var clonedDiv = $('#input-item');
                 if (st.includes(status)) {
                     clonedDiv.append('<div class="form-group row mb-3">\
-                                                    <label class="text-Captitalize">' + capitalizeFirstLetter(status) + '</label>\
+                                                    <label class="text-capitalize">' + capitalizeFirstLetter(status) + '</label>\
                                                     <input type="hidden" name="status[]" class="form-control" value="' +
                         status + '">\
                                                     <div class="col-md-3">\
@@ -874,7 +904,7 @@
                                               ');
                 } else {
                     clonedDiv.append('<div class="form-group row mb-3">\
-                                                   <label class="text-Captitalize">' + capitalizeFirstLetter(status) + '</label>\
+                                                   <label class="text-capitalize">' + capitalizeFirstLetter(status) + '</label>\
                                                     <input type="hidden" name="status[]" class="form-control" value="' +
                         status + '">\
                                                     <div class="col-md-3">\

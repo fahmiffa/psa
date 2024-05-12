@@ -35,7 +35,7 @@ class Status
 
         if(in_array($id,$payment))
         {
-            return 'Mohon menunggu verifikasi '.$state;
+            return 'Menunggu verifikasi '.$state;
         }
 
         // lintas negeri
@@ -61,7 +61,7 @@ class Status
 
         if($id == 4)
         {
-            return 'Mohon menunggu verifikasi';
+            return 'Mohon menunggu verifikasi Pekerjaan';
         }   
         
         if($id == 5)

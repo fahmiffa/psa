@@ -121,8 +121,8 @@ class JobController extends Controller
         $path = 'assets/kontrak';
         $path = Storage::disk('public')->put($path, $request->file('file'));
 
-        foreach ($job->come as $value) {
-            $apply = Apply::where('id', $value->id)->where('status', 3)->first();
+        foreach ($job->come->whereNull('kontrak')->values() as $value) {
+            $apply = Apply::where('id', $value->id)->where('status', 3)->whereNull('kontrak')->first();
             if ($apply) {
                 $head = Head::where('id', $apply->head)->first();
                 if ($head) {

@@ -101,8 +101,12 @@
                         @endif
                     </div>
                 @else
-                    @php$payment = $payment1;
+                    @php
+                        $payment = $payment1;
                     @endphp
+                    <div class="divider divider-center">
+                        <div class="divider-text h6">Pembayaran {{ $payment->name }}</div>
+                    </div>
                     @include('participant.payment');
                 @endif
             </div>

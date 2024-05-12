@@ -645,7 +645,7 @@ class StudentController extends Controller
             ];
 
             $message = [
-                'mimes' => 'Extension File invalid, harus jpg, jpeg, png',
+                'mimes' => 'Extension File invalid, only jpg, jpeg, png',
                 'max' => 'File size max 2Mb',
             ];
 

@@ -90,8 +90,8 @@ class NilaiController extends Controller
         $item->value    = $request->nilai;
         $item->save();
   
-        Status::grade($head,'menambakan nilai peserta '.$head->user->name,$var);  
-        Status::log('menambakan nilai peserta '.$head->user->name);  
+        Status::grade($head,'Menambakan nilai peserta '.$head->user->name,$var);  
+        Status::log('Menambakan nilai peserta '.$head->user->name);  
         Alert::success('success', 'Insert Successfully');
         return redirect()->route('nilai.index');
     }

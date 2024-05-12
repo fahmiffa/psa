@@ -17,7 +17,7 @@
                         <option value="ibu">Ibu</option>
                         <option value="suami">Suami</option>
                         <option value="istri">Istri</option>
-                        <option value="kakak">kakak</option>
+                        <option value="kaka">kakak</option>
                         <option value="adik">Adik</option>
                     </select>
                     <button class="btn btn-success btn-sm" type="button" id="add-item">Tambah</button>
