@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -47,7 +47,7 @@ class User extends Authenticatable
     
     public function getstateAttribute()
     {                
-        if($this->role == 'peserta')
+        if($this->role == 'mandiri' OR  $this->role == 'peserta')
         {
             $da = Participant::where('users_id',$this->id)->latest()->first();   
             $val = ($da) ? $da->status : 0;
@@ -64,7 +64,7 @@ class User extends Authenticatable
     // status siswa
     public function getstatAttribute()
     {                
-        if($this->role == 'peserta')
+        if($this->role == 'mandiri' OR  $this->role == 'peserta')
         {          
             $da = Participant::where('users_id',$this->id)->latest('created_at')->first();     
             return ($da) ? $da->status : 0;
@@ -77,7 +77,7 @@ class User extends Authenticatable
     
     public function getlogAttribute()
     {                
-        if($this->role == 'peserta')
+        if($this->role == 'mandiri' OR $this->role == 'peserta')
         {
             // $par = [0,2];
             $da = Participant::where('users_id',$this->id)->latest()->first();
@@ -182,7 +182,7 @@ class User extends Authenticatable
 
     public function participant()
     {
-        $master = ['peserta'];
+        $master = ['mandiri'];
         
         if(in_array($this->role,$master))
         {

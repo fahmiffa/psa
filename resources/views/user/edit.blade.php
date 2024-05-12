@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('profile.store', ['id' => md5($user->id)]) }}" method="post">
+                    <form action="{{ route('profile.store', ['id' => md5($user->id)]) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="px-3">
                             <div class="divider divider-center">
@@ -355,7 +355,9 @@
                                             <option value="wali">Wali</option>
                                             <option value="ayah">Ayah</option>
                                             <option value="ibu">Ibu</option>
-                                            <option value="kaka">kaka</option>
+                                            <option value="suami">Suami</option>
+                                            <option value="istri">Istri</option>
+                                            <option value="kaka">kakak</option>
                                             <option value="adik">Adik</option>
                                         </select>
                                         <button class="btn btn-success btn-sm" type="button"
@@ -390,7 +392,7 @@
                                 @isset($item->kaka)
                                     @php  $kaka = $item->kaka; @endphp
                                     <div class="form-group row mb-3">
-                                        <label class="text-Captitalize">kaka</label>
+                                        <label class="text-Captitalize">kakak</label>
                                         <input type="hidden" name="status[]" class="form-control" value="kaka">
                                         @for ($i = 0; $i < count($kaka); $i++)
                                             <div class="col-md-3">
@@ -428,6 +430,38 @@
                                             <div class="col-md-3">
                                                 <input type="text" name="ayah[]" class="form-control"
                                                     value="{{ $ayah[$i] }}" required>
+                                            </div>
+                                        @endfor
+                                        <button class="btn btn-danger my-auto" style="width:fit-content;height:fit-content"
+                                            onclick="remove(this)" type="button"><i class="bi bi-trash"></i></button>
+                                    </div>
+                                @endisset
+
+                                @isset($item->suami)
+                                    @php  $suami = $item->suami; @endphp
+                                    <div class="form-group row mb-3">
+                                        <label class="text-Captitalize">Suami</label>
+                                        <input type="hidden" name="status[]" class="form-control" value="suami">
+                                        @for ($i = 0; $i < count($suami); $i++)
+                                            <div class="col-md-3">
+                                                <input type="text" name="suami[]" class="form-control"
+                                                    value="{{ $suami[$i] }}" required>
+                                            </div>
+                                        @endfor
+                                        <button class="btn btn-danger my-auto" style="width:fit-content;height:fit-content"
+                                            onclick="remove(this)" type="button"><i class="bi bi-trash"></i></button>
+                                    </div>
+                                @endisset
+
+                                @isset($item->istri)
+                                    @php  $istri = $item->istri; @endphp
+                                    <div class="form-group row mb-3">
+                                        <label class="text-Captitalize">Istri</label>
+                                        <input type="hidden" name="status[]" class="form-control" value="istri">
+                                        @for ($i = 0; $i < count($istri); $i++)
+                                            <div class="col-md-3">
+                                                <input type="text" name="istri[]" class="form-control"
+                                                    value="{{ $istri[$i] }}" required>
                                             </div>
                                         @endfor
                                         <button class="btn btn-danger my-auto" style="width:fit-content;height:fit-content"
@@ -512,7 +546,7 @@
                             <label class="my-3">Riwayat Pekerjaan</label>
                             @if ($da->job)
                                 @php
-                                    $var = json_decode($da->job);                        
+                                    $var = json_decode($da->job);
                                 @endphp
                                 @for ($x = 0; $x < count($var); $x++)
                                     <div class="form-group row mb-3" id="master">
@@ -608,7 +642,8 @@
                                         <input type="month" name="endMagang[]" class="form-control">
                                     </div>
                                     <div class="col-4">
-                                        <input type="text" name="ind[]" class="form-control" placeholder="Industri">
+                                        <input type="text" name="ind[]" class="form-control"
+                                            placeholder="Industri">
                                     </div>
                                 </div>
                             @endif
@@ -674,24 +709,215 @@
                                         </select>
                                     </div>
                                     <div class="col-3">
-                                        <input type="text" name="level[]" class="form-control" placeholder="Level"
-                                        >
+                                        <input type="text" name="level[]" class="form-control" placeholder="Level">
                                     </div>
                                 </div>
                             @endif
 
                             <div class="form-group row mb-3">
-                                <div class="col-md-12">                                     
-                                    <div id="input-lins" class="mt-3">                    
+                                <div class="col-md-12">
+                                    <div id="input-lins" class="mt-3">
                                     </div>
-                                    <button class="btn btn-success btn-sm rounded-pill" type="button" id="add-lins">Tambah</button>      
+                                    <button class="btn btn-success btn-sm rounded-pill" type="button"
+                                        id="add-lins">Tambah</button>
                                 </div>
                             </div>
-                        
 
-                            <div class="my-3 d-flex justify-content-between">
+                            <div class="divider divider-center">
+                                <div class="divider-text">Upload FIle Dokumen</div>
+                            </div>
+                    
+                    
+                            <div class="form-group row mb-3">
+                                <label class="col-md-4">Pas Photo background Putih</label>
+                                <div class="col-md-4">
+                                    <input class="form-control" name="me" type="file" accept=".jpg, .jpeg, .png">
+                                    @error('me')
+                                        <div class='small text-danger text-left'>{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    @if ($da->file->photo)
+                                        <img src="{{ asset('storage/' . $da->file->photo) }}" class="w-25">
+                                    @endif
+                                </div>
+                            </div>
+                    
+                            <div class="form-group row mb-3">
+                                <label class="col-md-4">KTP</label>
+                                <div class="col-md-4">
+                                    <input class="form-control" name="ktp" type="file" accept=".jpg, .jpeg, .png">
+                                    @error('ktp')
+                                        <div class='small text-danger text-left'>{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    @if ($da->file->ktp)
+                                        <img src="{{ asset('storage/' . $da->file->ktp) }}" class="w-25">
+                                    @endif
+                                </div>
+                            </div>
+                    
+                            <div class="form-group row mb-3">
+                                <label class="col-md-4">Akte Kelahiran</label>
+                                <div class="col-md-4">
+                                    <input class="form-control" name="akte" type="file" accept=".jpg, .jpeg, .png">
+                                    @error('akte')
+                                        <div class='small text-danger text-left'>{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    @if ($da->file->akte)
+                                        <img src="{{ asset('storage/' . $da->file->akte) }}" class="w-25">
+                                    @endif
+                                </div>
+                            </div>
+                    
+                            <div class="form-group row mb-3">
+                                <label class="col-md-4">Kartu Keluarga</label>
+                                <div class="col-md-4">
+                                    <input class="form-control" name="kk" type="file" accept=".jpg, .jpeg, .png">
+                                    @error('kk')
+                                        <div class='small text-danger text-left'>{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    @if ($da->file->kk)
+                                        <img src="{{ asset('storage/' . $da->file->kk) }}" class="w-25">
+                                    @endif
+                                </div>
+                            </div>
+                    
+                            <div class="form-group row mb-3">
+                                <label class="col-md-4">Surat Keterangan Sehat</label>
+                                <div class="col-md-4">
+                                    <input class="form-control" name="sks" type="file" accept=".jpg, .jpeg, .png">
+                                    @error('sks')
+                                        <div class='small text-danger text-left'>{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    @if ($da->file->suratSehat)
+                                        <img src="{{ asset('storage/' . $da->file->suratSehat) }}" class="w-25">
+                                    @endif
+                                </div>
+                            </div>
+                    
+                            <div class="form-group row mb-3">
+                                <label class="col-md-4">Sertikat Vaksin COVID 19</label>
+                                <div class="col-md-4">
+                                    <input class="form-control" name="covid" type="file" accept=".jpg, .jpeg, .png">
+                                    @error('covid')
+                                        <div class='small text-danger text-left'>{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    @if ($da->file->vaksin)
+                                        <img src="{{ asset('storage/' . $da->file->vaksin) }}" class="w-25">
+                                    @endif
+                                </div>
+                            </div>
+                    
+                            <div class="divider divider-center">
+                                <div class="divider-text">Upload FIle Ijasah</div>
+                            </div>
+                    
+                            <div class="form-group row mb-3">
+                                <label class="col-md-4">SD</label>
+                                <div class="col-md-4">
+                                    <input class="form-control" name="sd" type="file" accept=".jpg, .jpeg, .png">
+                                    @error('sd')
+                                        <div class='small text-danger text-left'>{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    @if ($da->file->sd)
+                                        <img src="{{ asset('storage/' . $da->file->sd) }}" class="w-25">
+                                    @endif
+                                </div>
+                            </div>
+                    
+                            <div class="form-group row mb-3">
+                                <label class="col-md-4">SMP</label>
+                                <div class="col-md-4">
+                                    <input class="form-control" name="smp" type="file" accept=".jpg, .jpeg, .png">
+                                    @error('smp')
+                                        <div class='small text-danger text-left'>{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    @if ($da->file->smp)
+                                        <img src="{{ asset('storage/' . $da->file->smp) }}" class="w-25">
+                                    @endif
+                                </div>
+                            </div>
+                    
+                            <div class="form-group row mb-3">
+                                <label class="col-md-4">SMA/SMK</label>
+                                <div class="col-md-4">
+                                    <input class="form-control" name="sma" type="file" accept=".jpg, .jpeg, .png">
+                                    @error('sma')
+                                        <div class='small text-danger text-left'>{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    @if ($da->file->sma)
+                                        <img src="{{ asset('storage/' . $da->file->sma) }}" class="w-25">
+                                    @endif
+                                </div>
+                            </div>
+                    
+                            <div class="form-group row mb-3">
+                                <label class="col-md-4">S1</label>
+                                <div class="col-md-4">
+                                    <input class="form-control" name="s1" type="file" accept=".jpg, .jpeg, .png">
+                                    @error('s1')
+                                        <div class='small text-danger text-left'>{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    @if ($da->file->s1)
+                                        <img src="{{ asset('storage/' . $da->file->s1) }}" class="w-25">
+                                    @endif
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row mb-3">
+                                <label class="col-md-4">S2</label>
+                                <div class="col-md-4">
+                                    <input class="form-control" name="s2" type="file" accept=".jpg, .jpeg, .png">
+                                    @error('s2')
+                                        <div class='small text-danger text-left'>{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    @if ($da->file->s2)
+                                        <img src="{{ asset('storage/' . $da->file->s2) }}" class="w-25">
+                                    @endif
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row mb-3">
+                                <label class="col-md-4">S3</label>
+                                <div class="col-md-4">
+                                    <input class="form-control" name="s3" type="file" accept=".jpg, .jpeg, .png">
+                                    @error('s3')
+                                        <div class='small text-danger text-left'>{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    @if ($da->file->s3)
+                                        <img src="{{ asset('storage/' . $da->file->s1) }}" class="w-25">
+                                    @endif
+                                </div>
+                            </div>
+
+
+                            <div class="my-3 d-flex justify-content-end">
                                 <button class="btn btn-primary rounded-pill">Save</button>
-                                <button type="button" class="btn btn-danger rounded-pill"
+                                <button type="button" class="btn btn-danger rounded-pill ms-3"
                                     onclick="goBack()">Back</button>
                             </div>
                         </div>
@@ -728,35 +954,37 @@
                 var clonedDiv = $('#input-item');
                 if (st.includes(status)) {
                     clonedDiv.append('<div class="form-group row mb-3">\
-                                                    <label class="text-Captitalize">' + capitalizeFirstLetter(status) + '</label>\
-                                                    <input type="hidden" name="status[]" class="form-control" value="' +
+                                                        <label class="text-Captitalize">' + capitalizeFirstLetter(status) +
+                        '</label>\
+                                                        <input type="hidden" name="status[]" class="form-control" value="' +
                         status + '">\
-                                                    <div class="col-md-3">\
-                                                      <input type="text" name="' + status + '[]" class="form-control" placeholder="Nama" required>\
+                                                        <div class="col-md-3">\
+                                                          <input type="text" name="' + status + '[]" class="form-control" placeholder="Nama" required>\
+                                                        </div>\
+                                                        <div class="col-md-3">\
+                                                          <input type="number" name="' + status + '[]" class="form-control" placeholder="Umur" required>\
+                                                        </div> \
+                                                        <div class="col-md-3">\
+                                                          <input type="number" name="' + status + '[]" class="form-control" placeholder="Nomor HP" required>\
+                                                        </div>\
+                                                        <button class="btn btn-danger my-auto" style="width:fit-content;height:fit-content" onclick="remove(this)" type="button"><i class="bi bi-trash"></i></button>\
                                                     </div>\
-                                                    <div class="col-md-3">\
-                                                      <input type="number" name="' + status + '[]" class="form-control" placeholder="Umur" required>\
-                                                    </div> \
-                                                    <div class="col-md-3">\
-                                                      <input type="number" name="' + status + '[]" class="form-control" placeholder="Nomor HP" required>\
-                                                    </div>\
-                                                    <button class="btn btn-danger my-auto" style="width:fit-content;height:fit-content" onclick="remove(this)" type="button"><i class="bi bi-trash"></i></button>\
-                                                </div>\
-                                              ');
+                                                  ');
                 } else {
                     clonedDiv.append('<div class="form-group row mb-3">\
-                                                   <label class="text-Captitalize">' + capitalizeFirstLetter(status) + '</label>\
-                                                    <input type="hidden" name="status[]" class="form-control" value="' +
+                                                       <label class="text-Captitalize">' + capitalizeFirstLetter(status) +
+                        '</label>\
+                                                        <input type="hidden" name="status[]" class="form-control" value="' +
                         status + '">\
-                                                    <div class="col-md-3">\
-                                                      <input type="text" name="' + status + '[]" class="form-control" placeholder="Nama" required>\
+                                                        <div class="col-md-3">\
+                                                          <input type="text" name="' + status + '[]" class="form-control" placeholder="Nama" required>\
+                                                        </div>\
+                                                        <div class="col-md-3">\
+                                                          <input type="number" name="' + status + '[]" class="form-control" placeholder="Umur" required>\
+                                                        </div> \
+                                                        <button class="btn btn-danger my-auto" style="width:fit-content;height:fit-content" onclick="remove(this)" type="button"><i class="bi bi-trash"></i></button>\
                                                     </div>\
-                                                    <div class="col-md-3">\
-                                                      <input type="number" name="' + status + '[]" class="form-control" placeholder="Umur" required>\
-                                                    </div> \
-                                                    <button class="btn btn-danger my-auto" style="width:fit-content;height:fit-content" onclick="remove(this)" type="button"><i class="bi bi-trash"></i></button>\
-                                                </div>\
-                                              ');
+                                                  ');
                 }
             } else {
                 alert('Silahkan pilih status');

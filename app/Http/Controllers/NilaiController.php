@@ -45,11 +45,19 @@ class NilaiController extends Controller
     public function siswa(Request $request)
     {
         $da = Student::doesnthave('nilai')->where('kelas',$request->id)->get(); 
+        
         if($da->count() > 0)
         {
             foreach($da as $item)
             {
-                $val []= ['label'=>$item->siswa->name. ' ('.$item->penyanggah->name.')', 'value'=>$item->siswa->id];
+                if($item->penyanggah)
+                {
+                    $val []= ['label'=>$item->siswa->name. ' ('.$item->penyanggah->name.')', 'value'=>$item->siswa->id];
+                }
+                else
+                {
+                    $val []= ['label'=>$item->siswa->name. ' ('.env('APP_NAME').')', 'value'=>$item->siswa->id];
+                }
             }
         }
         else

@@ -65,7 +65,7 @@ class HeadController extends Controller
         
         $paid = Paid::where(DB::raw('md5(id)'),$id)->first();
         $head = Head::where('id',$paid->head)->first();
-        if($head && $paid)
+        if($head && $paid && $paid->status != 1)
         {            
             $st = $head->user->stat;           
             if($st == 1)
@@ -80,8 +80,9 @@ class HeadController extends Controller
             $paid->save();
             
             $var = 1 + $st;
-            Status::grade($head,'verified payment '.$paid->payment->name,$var);   
-            Status::log('verified payment '.$paid->payment->name);                             
+            Status::grade($head,'Menerima Pembayaran '.$paid->payment->name,$var);   
+            Status::log('Menerima Pembayaran '.$paid->payment->name. ' Peserta '.$head->user->name, $paid->payment->id, 'payment'); 
+            // Status::log('Menunggu verifikasi kelas '.$head->user->name, null, 'Kelas');                             
             Alert::success('success', 'Verif Successfully');
         }
         else
@@ -115,8 +116,7 @@ class HeadController extends Controller
             if($head->status == 3)
             {
                 $var = 6;
-                Status::grade($head,'reject payment '.$paid->payment->name,$var);   
-                Status::log('reject payment '.$paid->payment->name); 
+                Status::grade($head,'Tolak Pembayaran  '.$paid->payment->name,$var);   
             }
             
             
@@ -125,8 +125,8 @@ class HeadController extends Controller
                 $par = Participant::where('head',$paid->head)->first();
                 $head->delete();      
                 $par->delete();                
-                Status::log('reject payment '.$paid->payment->name);   
             }      
+            Status::log('Tolak Pembayaran ' . $paid->payment->name.' Peserta '.$head->user->name, $paid->payment->id, 'payment');
             Alert::success('success', 'Reject Successfully');
         }
         else

@@ -146,9 +146,13 @@ class StudentController extends Controller
 
             if ($data->status == 6) {
                 $rule = [
-                    'wali' => 'required_without_all:ayah,ibu',
-                    'ibu' => 'required_without_all:ayah,wali',
-                    'ayah' => 'required_without_all:ibu,wali',
+                    'wali' => 'required_without_all:ayah,ibu,suami,istri,kaka,adik',
+                    'ibu' => 'required_without_all:ayah,wali,suami,istri,kaka,adik',
+                    'ayah' => 'required_without_all:ibu,wali,suami,istri,kaka,adik',
+                    'suami' => 'required_without_all:ibu,wali,ayah,istri,kaka,adik',
+                    'istri' => 'required_without_all:ibu,wali,ayah,suami,kaka,adik',
+                    'kaka' => 'required_without_all:ibu,wali,ayah,suami,istri,adik',
+                    'adik' => 'required_without_all:ibu,wali,ayah,suami,istri,kaka',
                 ];
                 $message = ['required_without_all' => 'Field Orang Tua/Wali harus disi'];
 
@@ -160,6 +164,14 @@ class StudentController extends Controller
 
                 if ($request->ibu) {
                     $val['ibu'] = $request->ibu;
+                }
+
+                if ($request->istri) {
+                    $val['istri'] = $request->istri;
+                }
+
+                if ($request->suami) {
+                    $val['suami'] = $request->suami;
                 }
 
                 if ($request->wali) {
@@ -385,12 +397,7 @@ class StudentController extends Controller
                 $pile->save();
 
                 $data->me = $request->prom;
-                $data->save();
-                
-                $item = new Student;
-                $item->lpk = Auth::user()->id;
-                $item->student = $user->id;
-                $item->save();
+                $data->save();            
 
                 Alert::success('success', 'Register Successfully, please fil next form register');
                 return redirect()->route('home');
@@ -551,6 +558,11 @@ class StudentController extends Controller
         $user->status = 3;
         $user->save();
 
+        $item = new Student;
+        $item->lpk = Auth::user()->id;
+        $item->student = $user->id;
+        $item->save();
+
         $data = new Data;
         $data->users_id = $user->id;
         $data->alamat = $request->alamat;
@@ -566,11 +578,6 @@ class StudentController extends Controller
         $data->status = 7;
         $data->lpk = $request->lpk;
         $data->save();
-
-        $item = new Student;
-        $item->lpk = Auth::user()->id;
-        $item->student = $user->id;
-        $item->save();
 
         Alert::success('success', 'Register Successfully, please fil next form register');
         return redirect()->route('lpk.next', ['id' => md5($user->id)]);
@@ -620,7 +627,7 @@ class StudentController extends Controller
     public function pendaftaranUpdate(Request $request, $id)
     {
         $da = Data::where(DB::Raw('md5(id)'), $id)->first();
-        $user = User::where(DB::Raw('md5(id)'), $da->users_id)->first();
+        $user = User::where('id', $da->users_id)->first();
 
         if ($da) {
             $rule = [
@@ -632,6 +639,9 @@ class StudentController extends Controller
                 'sd' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
                 'smp' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
                 'sma' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+                's1' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+                's2' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+                's3' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
             ];
 
             $message = [
@@ -735,14 +745,34 @@ class StudentController extends Controller
             }
 
 
-            $ij = $request->file('s1');
-            if ($ij) {
-                $ext = $ij->getClientOriginalExtension();
-                $path = $ij->storeAs(
+            $s1 = $request->file('s1');
+            if ($s1) {
+                $ext = $s1->getClientOriginalExtension();
+                $path = $s1->storeAs(
                     'assets/data/' . $user->id, $user->id . '_s1.' . $ext, ['disk' => 'public']
                 );
                 $pile->s1 = $path;
             }
+
+            $s2 = $request->file('s2');
+            if ($s2) {
+                $ext = $s2->getClientOriginalExtension();
+                $path = $s2->storeAs(
+                    'assets/data/' . $user->id, $user->id . '_s2.' . $ext, ['disk' => 'public']
+                );
+                $pile->s2 = $path;
+            }
+
+            $s3 = $request->file('s3');
+            if ($s3) {
+                $ext = $s3->getClientOriginalExtension();
+                $path = $s3->storeAs(
+                    'assets/data/' . $user->id, $user->id . '_s3.' . $ext, ['disk' => 'public']
+                );
+                $pile->s3 = $path;
+            }
+
+          
             $pile->save();
 
             $data = $da;
@@ -793,6 +823,14 @@ class StudentController extends Controller
 
             if ($request->adik) {
                 $val['adik'] = $request->adik;
+            }
+
+            if ($request->suami) {
+                $val['suami'] = $request->suami;
+            }
+
+            if ($request->istri) {
+                $val['istri'] = $request->istri;
             }
 
             $data->family = ($val) ? json_encode($val) : null;
@@ -865,7 +903,7 @@ class StudentController extends Controller
                 $data->lisensi = ($lisensi == null) ? $lisensi : json_encode($lisensi);
             }
 
-            $data->me = $request->me;
+            $data->me = $request->prom;
             $data->save();
 
             Alert::success('success', 'Update Successfully');
@@ -927,6 +965,8 @@ class StudentController extends Controller
         $user = User::where('id', $student->student)->first();
         $user->delete();
 
+        Data::where('users_id', $student->student)->delete();
+        Files::where('users_id', $student->student)->delete();
         $student->delete();
         Alert::success('success', 'Delete Successfully');
         return back();

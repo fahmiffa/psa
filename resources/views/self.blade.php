@@ -26,7 +26,7 @@
             </div>
         @endif
 
-        <h3 class="card-title">Profile <span class="text-capitalize">{{ auth()->user()->name }}</span></h3>
+        <h5 class="card-title">Profile <span class="text-capitalize">{{ auth()->user()->name }}</span></h5>
 
     </div>
 
@@ -430,6 +430,120 @@
                                 </div>
                             </div>
                         @endif
+
+                        <div class="form-group row mb-3">
+                            <label class="col-md-4">Pas Photo background Putih</label>          
+                            <div class="col-md-4">
+                                @if ($da->file->photo)
+                                    <img src="{{ asset('storage/' . $da->file->photo) }}" class="w-25">
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            <label class="col-md-4">KTP</label>                          
+                            <div class="col-md-4">
+                                @if ($da->file->ktp)
+                                    <img src="{{ asset('storage/' . $da->file->ktp) }}" class="w-25">
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            <label class="col-md-4">Akte Kelahiran</label>                       
+                            <div class="col-md-4">
+                                @if ($da->file->akte)
+                                    <img src="{{ asset('storage/' . $da->file->akte) }}" class="w-25">
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            <label class="col-md-4">Kartu Keluarga</label>                         
+                            <div class="col-md-4">
+                                @if ($da->file->kk)
+                                    <img src="{{ asset('storage/' . $da->file->kk) }}" class="w-25">
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            <label class="col-md-4">Surat Keterangan Sehat</label>                         
+                            <div class="col-md-4">
+                                @if ($da->file->suratSehat)
+                                    <img src="{{ asset('storage/' . $da->file->suratSehat) }}" class="w-25">
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            <label class="col-md-4">Sertikat Vaksin COVID 19</label>                      
+                            <div class="col-md-4">
+                                @if ($da->file->vaksin)
+                                    <img src="{{ asset('storage/' . $da->file->vaksin) }}" class="w-25">
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="divider divider-center">
+                            <div class="divider-text">FIle Ijasah</div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            <label class="col-md-4">SD</label>                          
+                            <div class="col-md-4">
+                                @if ($da->file->sd)
+                                    <img src="{{ asset('storage/' . $da->file->sd) }}" class="w-25">
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            <label class="col-md-4">SMP</label>                        
+                            <div class="col-md-4">
+                                @if ($da->file->smp)
+                                    <img src="{{ asset('storage/' . $da->file->smp) }}" class="w-25">
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            <label class="col-md-4">SMA/SMK</label>                    
+                            <div class="col-md-4">
+                                @if ($da->file->sma)
+                                    <img src="{{ asset('storage/' . $da->file->sma) }}" class="w-25">
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            <label class="col-md-4">S1</label>                         
+                            <div class="col-md-4">
+                                @if ($da->file->s1)
+                                    <img src="{{ asset('storage/' . $da->file->s1) }}" class="w-25">
+                                @endif
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row mb-3">
+                            <label class="col-md-4">S2</label>                          
+                            <div class="col-md-4">
+                                @if ($da->file->s2)
+                                    <img src="{{ asset('storage/' . $da->file->s2) }}" class="w-25">
+                                @endif
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row mb-3">
+                            <label class="col-md-4">S3</label>                          
+                            <div class="col-md-4">
+                                @if ($da->file->s3)
+                                    <img src="{{ asset('storage/' . $da->file->s3) }}" class="w-25">
+                                @endif
+                            </div>
+                        </div>
 
                         <div class="mb-3 d-flex justify-content-between">
                             <a href="{{ route('profile.edit') }}" class="btn btn-primary rounded-pill">Edit</a>

@@ -110,6 +110,26 @@
         </div>
 
         <div class="form-group row mb-3">
+            <label class="col-md-4">S2</label>
+            <div class="col-md-8">
+                <input class="form-control" name="s2" type="file" accept=".jpg, .jpeg, .png">
+                @error('s2')
+                    <div class='small text-danger text-left'>{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+
+        <div class="form-group row mb-3">
+            <label class="col-md-4">S3</label>
+            <div class="col-md-8">
+                <input class="form-control" name="s3" type="file" accept=".jpg, .jpeg, .png">
+                @error('s3')
+                    <div class='small text-danger text-left'>{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+
+        <div class="form-group row mb-3">
             <label class="my-3">Promosi diri, harapan, pertanyaan, dll</label>
             <textarea class="form-control" rows="2" name="prom">{{ old('prom') }}</textarea>
             @error('prom')

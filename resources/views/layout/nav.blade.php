@@ -107,7 +107,7 @@
     </li>   
     @endif 
 
-    @if(auth()->user()->hasRole('peserta'))
+    @if(auth()->user()->hasRole('mandiri'))
     <li class="menu-item {{ (request()->routeIs('study')) ? 'active' : null }}">
         <a href="{{route('study')}}"
             class='menu-link'>Kelas

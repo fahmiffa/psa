@@ -103,7 +103,12 @@ class Status
         if($id == 13)
         {
             return 'Anda dalam karantina';
-        }   
+        }  
+        
+        if($id == 14)
+        {
+            return 'Anda Beragkat Ke jepang';
+        }  
    
 
    }

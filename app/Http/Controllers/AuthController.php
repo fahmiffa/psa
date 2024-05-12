@@ -32,7 +32,7 @@ class AuthController extends Controller
         return view('forgot');
     }
 
-    public function new ($id)
+    public function new($id)
     {
         $user = User::where(DB::raw('md5(req)'), $id)->first();
         if ($user) {
@@ -89,8 +89,7 @@ class AuthController extends Controller
         ];
 
         $mail = Mail::to($user->email)->send(new MyMail($details));
-        dd($mail);
-
+        
         Alert::success('info', 'Send a link to reset your password, check email');
         return back();
 
@@ -131,7 +130,7 @@ class AuthController extends Controller
         $item->name = $request->user;
         $item->email = $request->email;
         $item->hp = $request->hp;
-        $item->role = 'peserta';
+        $item->role = 'mandiri';
         $item->password = bcrypt($request->password);
         $item->status = env('MAIL') ? 2 : 1;
         $item->save();
@@ -248,6 +247,13 @@ class AuthController extends Controller
 
                 if ($request->ayah) {
                     $val['ayah'] = $request->ayah;
+                }
+
+                if ($request->istri) {
+                    $val['istri'] = $request->istri;
+                }
+                if ($request->suami) {
+                    $val['suami'] = $request->suami;
                 }
 
                 if ($request->ibu) {
@@ -467,6 +473,33 @@ class AuthController extends Controller
                     $path = $sma->storeAs(
                         'assets/data/' . $user->id, $user->id . '_sma.' . $ext, ['disk' => 'public']
                     );
+
+                    $s1 = $request->file('s1');
+                    if ($s1) {
+                        $ext = $s1->getClientOriginalExtension();
+                        $path = $s1->storeAs(
+                            'assets/data/' . $user->id . '/' . $user->id . '_s1.' . $ext, ['disk' => 'public']
+                        );
+                        $pile->s1 = $path;
+                    }
+
+                    $s2 = $request->file('s2');
+                    if ($s2) {
+                        $ext = $s2->getClientOriginalExtension();
+                        $path = $s2->storeAs(
+                            'assets/data/' . $user->id . '/' . $user->id . '_s2.' . $ext, ['disk' => 'public']
+                        );
+                        $pile->s2 = $path;
+                    }
+
+                    $s3 = $request->file('s3');
+                    if ($s3) {
+                        $ext = $s3->getClientOriginalExtension();
+                        $path = $s3->storeAs(
+                            'assets/data/' . $user->id . '/' . $user->id . '_s3.' . $ext, ['disk' => 'public']
+                        );
+                        $pile->s3 = $path;
+                    }
         
                     $pile->sma = $path;
                     if(!$pile->save())

@@ -375,6 +375,38 @@
                 </div>
             @endisset
 
+            @isset($item->suami)
+                @php  $suami = $item->suami; @endphp
+                <div class="form-group row mb-3">
+                    <label class="text-Captitalize">suami</label>
+                    <input type="hidden" name="status[]" class="form-control" value="suami">
+                    @for ($i = 0; $i < count($suami); $i++)
+                        <div class="col-md-3">
+                            <input type="text" name="suami[]" class="form-control" value="{{ $suami[$i] }}"
+                                required>
+                        </div>
+                    @endfor
+                    <button class="btn btn-danger my-auto" style="width:fit-content;height:fit-content"
+                        onclick="remove(this)" type="button"><i class="bi bi-trash"></i></button>
+                </div>
+            @endisset
+
+            @isset($item->istri)
+                @php  $istri = $item->istri; @endphp
+                <div class="form-group row mb-3">
+                    <label class="text-Captitalize">istri</label>
+                    <input type="hidden" name="status[]" class="form-control" value="istri">
+                    @for ($i = 0; $i < count($istri); $i++)
+                        <div class="col-md-3">
+                            <input type="text" name="istri[]" class="form-control" value="{{ $istri[$i] }}"
+                                required>
+                        </div>
+                    @endfor
+                    <button class="btn btn-danger my-auto" style="width:fit-content;height:fit-content"
+                        onclick="remove(this)" type="button"><i class="bi bi-trash"></i></button>
+                </div>
+            @endisset
+
             @isset($item->wali)
                 @php  $wali = $item->wali; @endphp
                 <div class="form-group row mb-3">
@@ -401,7 +433,9 @@
                         <option value="wali">Wali</option>
                         <option value="ayah">Ayah</option>
                         <option value="ibu">Ibu</option>
-                        <option value="kaka">kaka</option>
+                        <option value="suami">Suami</option>
+                        <option value="istri">Istri</option>
+                        <option value="kaka">kakak</option>
                         <option value="adik">Adik</option>
                     </select>
                     <button class="btn btn-success btn-sm" type="button" id="add-item">Tambah</button>
@@ -823,35 +857,35 @@
                 var clonedDiv = $('#input-item');
                 if (st.includes(status)) {
                     clonedDiv.append('<div class="form-group row mb-3">\
-                                                <label class="text-Captitalize">' + capitalizeFirstLetter(status) + '</label>\
-                                                <input type="hidden" name="status[]" class="form-control" value="' +
+                                                    <label class="text-Captitalize">' + capitalizeFirstLetter(status) + '</label>\
+                                                    <input type="hidden" name="status[]" class="form-control" value="' +
                         status + '">\
-                                                <div class="col-md-3">\
-                                                  <input type="text" name="' + status + '[]" class="form-control" placeholder="Nama" required>\
+                                                    <div class="col-md-3">\
+                                                      <input type="text" name="' + status + '[]" class="form-control" placeholder="Nama" required>\
+                                                    </div>\
+                                                    <div class="col-md-3">\
+                                                      <input type="number" name="' + status + '[]" class="form-control" placeholder="Umur" required>\
+                                                    </div> \
+                                                    <div class="col-md-3">\
+                                                      <input type="number" name="' + status + '[]" class="form-control" placeholder="Nomor HP" required>\
+                                                    </div>\
+                                                    <button class="btn btn-danger my-auto" style="width:fit-content;height:fit-content" onclick="remove(this)" type="button"><i class="bi bi-trash"></i></button>\
                                                 </div>\
-                                                <div class="col-md-3">\
-                                                  <input type="number" name="' + status + '[]" class="form-control" placeholder="Umur" required>\
-                                                </div> \
-                                                <div class="col-md-3">\
-                                                  <input type="number" name="' + status + '[]" class="form-control" placeholder="Nomor HP" required>\
-                                                </div>\
-                                                <button class="btn btn-danger my-auto" style="width:fit-content;height:fit-content" onclick="remove(this)" type="button"><i class="bi bi-trash"></i></button>\
-                                            </div>\
-                                          ');
+                                              ');
                 } else {
                     clonedDiv.append('<div class="form-group row mb-3">\
-                                               <label class="text-Captitalize">' + capitalizeFirstLetter(status) + '</label>\
-                                                <input type="hidden" name="status[]" class="form-control" value="' +
+                                                   <label class="text-Captitalize">' + capitalizeFirstLetter(status) + '</label>\
+                                                    <input type="hidden" name="status[]" class="form-control" value="' +
                         status + '">\
-                                                <div class="col-md-3">\
-                                                  <input type="text" name="' + status + '[]" class="form-control" placeholder="Nama" required>\
+                                                    <div class="col-md-3">\
+                                                      <input type="text" name="' + status + '[]" class="form-control" placeholder="Nama" required>\
+                                                    </div>\
+                                                    <div class="col-md-3">\
+                                                      <input type="number" name="' + status + '[]" class="form-control" placeholder="Umur" required>\
+                                                    </div> \
+                                                    <button class="btn btn-danger my-auto" style="width:fit-content;height:fit-content" onclick="remove(this)" type="button"><i class="bi bi-trash"></i></button>\
                                                 </div>\
-                                                <div class="col-md-3">\
-                                                  <input type="number" name="' + status + '[]" class="form-control" placeholder="Umur" required>\
-                                                </div> \
-                                                <button class="btn btn-danger my-auto" style="width:fit-content;height:fit-content" onclick="remove(this)" type="button"><i class="bi bi-trash"></i></button>\
-                                            </div>\
-                                          ');
+                                              ');
                 }
             } else {
                 alert('Silahkan pilih status');

@@ -368,7 +368,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div class="row px-3">
                                                     <div class="row">
                                                         <div class="divider divider-left-center">
@@ -425,11 +425,42 @@
                                                                 @endisset
 
                                                                 @isset($val->kaka)
-                                                                    <div class="col-md-3">
+                                                                    <div class="col-md-4">
                                                                         <p class="form-control-static">Kaka</p>
                                                                     </div>
                                                                     @foreach ($val->kaka as $item)
-                                                                        <div class="col-md-3">
+                                                                        <div class="col-md-4">
+                                                                            <label
+                                                                                for="disabledInput">{{ $index[$loop->index] }}</label>
+                                                                            <p class="form-control-static">{{ $item }}
+                                                                            </p>
+                                                                        </div>
+                                                                    @endforeach
+                                                                @endisset
+
+                                                                @isset($val->istri)
+                                                                    <div class="col-md-4">
+                                                                        <p class="form-control-static">istri</p>
+                                                                    </div>
+
+                                                                    @foreach ($val->istri as $item)
+                                                                        <div class="col-md-4">
+                                                                            <label
+                                                                                for="disabledInput">{{ $index[$loop->index] }}</label>
+                                                                            <p class="form-control-static">{{ $item }}
+                                                                            </p>
+                                                                        </div>
+                                                                    @endforeach
+                                                                @endisset
+
+                                                                @isset($val->suami)
+                                                                    <div class="col-md-4">
+                                                                        <p class="form-control-static text-capitalize">suami
+                                                                        </p>
+                                                                    </div>
+
+                                                                    @foreach ($val->suami as $item)
+                                                                        <div class="col-md-4">
                                                                             <label
                                                                                 for="disabledInput">{{ $index[$loop->index] }}</label>
                                                                             <p class="form-control-static">{{ $item }}
@@ -516,13 +547,14 @@
                                                                 @endisset
 
                                                                 @isset($val->kaka)
-                                                                    <div class="col-md-3">
-                                                                        <p class="form-control-static">kaka</p>
+                                                                    <div class="col-md-4">
+                                                                        <p class="form-control-static text-capitalize">kakak
+                                                                        </p>
                                                                         <input type="hidden" name="status[]"
-                                                                            class="form-control" value="kaka">
+                                                                            class="form-control" value="kakak">
                                                                     </div>
                                                                     @foreach ($val->kaka as $item)
-                                                                        <div class="col-md-3">
+                                                                        <div class="col-md-4">
                                                                             <label
                                                                                 for="disabledInput">{{ $index[$loop->index] }}</label>
                                                                             <input type="text" name="kaka[]"
@@ -532,19 +564,56 @@
                                                                     @endforeach
                                                                 @endisset
 
-                                                                @isset($val->adik)
-                                                                    <div class="col-md-3">
-                                                                        <p class="form-control-static">adik</p>
+                                                                @isset($val->suami)
+                                                                    <div class="col-md-4">
+                                                                        <p class="form-control-static text-capitalize">suami
+                                                                        </p>
                                                                         <input type="hidden" name="status[]"
-                                                                            class="form-control" value="adik">
+                                                                            class="form-control" value="suami">
                                                                     </div>
-                                                                    @foreach ($val->adik as $item)
-                                                                        <div class="col-md-3">
+                                                                    @foreach ($val->suami as $item)
+                                                                        <div class="col-md-4">
                                                                             <label
                                                                                 for="disabledInput">{{ $index[$loop->index] }}</label>
-                                                                            <input type="text" name="adik[]"
+                                                                            <input type="text" name="suami[]"
                                                                                 class="form-control"
                                                                                 value="{{ $item }}" required>
+                                                                        </div>
+                                                                    @endforeach
+                                                                @endisset
+
+                                                                @isset($val->istri)
+                                                                    <div class="col-md-4">
+                                                                        <p class="form-control-static text-capitalize">istri
+                                                                        </p>
+                                                                        <input type="hidden" name="status[]"
+                                                                            class="form-control" value="istri">
+                                                                    </div>
+
+                                                                    @foreach ($val->istri as $item)
+                                                                        <div class="col-md-4">
+                                                                            <label
+                                                                                for="disabledInput">{{ $index[$loop->index] }}</label>
+                                                                            <p class="form-control-static">{{ $item }}
+                                                                            </p>
+                                                                        </div>
+                                                                    @endforeach
+                                                                @endisset
+
+                                                                @isset($val->adik)
+                                                                    <div class="col-md-4">
+                                                                        <p class="form-control-static text-capitalize">Adik</p>
+                                                                        <input type="hidden" name="status[]"
+                                                                            class="form-control" value="istri">
+
+                                                                    </div>
+
+                                                                    @foreach ($val->adik as $item)
+                                                                        <div class="col-md-4">
+                                                                            <label
+                                                                                for="disabledInput">{{ $index[$loop->index] }}</label>
+                                                                            <p class="form-control-static">{{ $item }}
+                                                                            </p>
                                                                         </div>
                                                                     @endforeach
                                                                 @endisset
@@ -554,7 +623,7 @@
                                                     </div>
                                                 </div>
 
-                                                @if($da->study)
+                                                @if ($da->study)
                                                     <div class="row px-3">
                                                         <div class="row">
                                                             <div class="divider divider-left-center">
@@ -567,17 +636,20 @@
                                                                     @for ($i = 0; $i < count($st); $i++)
                                                                         <div class="col-md-4">
                                                                             <label for="disabledInput">Nama</label>
-                                                                            <p class="form-control-static">{{ $st[$i][0] }}
+                                                                            <p class="form-control-static">
+                                                                                {{ $st[$i][0] }}
                                                                             </p>
                                                                         </div>
                                                                         <div class="col-md-4">
                                                                             <label for="disabledInput">Awal</label>
-                                                                            <p class="form-control-static">{{ $st[$i][1] }}
+                                                                            <p class="form-control-static">
+                                                                                {{ $st[$i][1] }}
                                                                             </p>
                                                                         </div>
                                                                         <div class="col-md-4">
                                                                             <label for="disabledInput">Akhir</label>
-                                                                            <p class="form-control-static">{{ $st[$i][2] }}
+                                                                            <p class="form-control-static">
+                                                                                {{ $st[$i][2] }}
                                                                             </p>
                                                                         </div>
                                                                     @endfor
@@ -614,7 +686,7 @@
                                                     </div>
                                                 @endif
 
-                                                @if($da->job)
+                                                @if ($da->job)
                                                     <div class="row px-3">
                                                         <div class="row">
                                                             <div class="divider divider-left-center">
@@ -739,7 +811,8 @@
                                                                     <div class="col-md-12">
                                                                         <label for="disabledInput">Promosi diri, harapan,
                                                                             pertanyaan, dll</label>
-                                                                        <p class="form-control-static">{{ $da->me }}
+                                                                        <p class="form-control-static">
+                                                                            {{ $da->me }}
                                                                         </p>
                                                                     </div>
 
@@ -792,7 +865,7 @@
                                                     </div>
                                                 @endif
 
-                                                @if($da->lisensi)
+                                                @if ($da->lisensi)
                                                     <div class="row px-3">
                                                         <div class="divider divider-left-center">
                                                             <div class="divider-text h6">Lisensi</div>
@@ -804,17 +877,20 @@
                                                                 @for ($i = 0; $i < count($st); $i++)
                                                                     <div class="col-md-4">
                                                                         <label for="disabledInput">Nama</label>
-                                                                        <p class="form-control-static">{{ $st[$i][0] }}
+                                                                        <p class="form-control-static">
+                                                                            {{ $st[$i][0] }}
                                                                         </p>
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <label for="disabledInput">Waktu</label>
-                                                                        <p class="form-control-static">{{ $st[$i][1] }}
+                                                                        <p class="form-control-static">
+                                                                            {{ $st[$i][1] }}
                                                                         </p>
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <label for="disabledInput">level</label>
-                                                                        <p class="form-control-static">{{ $st[$i][2] }}
+                                                                        <p class="form-control-static">
+                                                                            {{ $st[$i][2] }}
                                                                         </p>
                                                                     </div>
                                                                 @endfor
@@ -931,7 +1007,8 @@
                                                     <p class="text-wrap">Dokumen Visa</p>
                                                 </div>
                                                 <div class="p-1">
-                                                    <form action="{{ route('doc.destroy.lpk', ['id' => md5($vis->id)]) }}"
+                                                    <form
+                                                        action="{{ route('doc.destroy.lpk', ['id' => md5($vis->id)]) }}"
                                                         method="post">
                                                         @csrf
                                                         <button class="btn btn-danger btn-sm float-end"><i
@@ -941,7 +1018,8 @@
                                             </div>
                                             <div class="embed-responsive embed-responsive-16by9">
                                                 <iframe class="no-scroll-iframe" width="100%" height="500"
-                                                    src="{{ asset('storage/' . $vis->dokumen) }}" allowfullscreen></iframe>
+                                                    src="{{ asset('storage/' . $vis->dokumen) }}"
+                                                    allowfullscreen></iframe>
                                             </div>
                                         </div>
                                     @else

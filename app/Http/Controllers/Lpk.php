@@ -151,6 +151,7 @@ class Lpk extends Controller
                 $st = $user->stat;
                 $var = $st + 1;
 
+
                 // apply job
                 if ($st == 3) {
                     $rule = [
@@ -180,7 +181,7 @@ class Lpk extends Controller
                     $apply->save();
 
                     Status::grade($head, 'Apply Job', $var);
-                    Status::log('Apply Job ' . $job->name, $job->id, 'job');
+                    Status::log('Apply Job ' . $job->section. ' Peserta '.$head->user->name, $job->id, 'job');
                     return redirect()->route('kelas.lpk');
 
                 }
@@ -294,6 +295,7 @@ class Lpk extends Controller
 
                 Status::grade($head, 'Pendaftaran Siswa ' . $user->name, $var);
                 Status::log('Pendaftaran Siswa ' . $user->name, $user->id, 'lpk');
+                Status::log('Menunggu Verifiikasi kelas ' . $user->name, $user->id, 'kelas');
 
                 return redirect()->route('kelas.lpk');
             }
@@ -310,7 +312,7 @@ class Lpk extends Controller
 
     public function doc($id)
     {
-        $head = Head::where(DB::raw('md5(participant)'), $id)->whereIn('status', [5, 4, 3, 2])->latest()->first();
+        $head = Head::where(DB::raw('md5(participant)'), $id)->latest()->first();
         $apply = Apply::where(DB::raw('md5(users_id)'), $id)->where('status', 3)->first();
         $data = Data::where(DB::raw('md5(users_id)'), $id)->first();
         $dataj = DataJ::where(DB::raw('md5(users_id)'), $id)->first();
@@ -394,6 +396,14 @@ class Lpk extends Controller
             $val['adik'] = $request->adik;
         }
 
+        if ($request->istri) {
+            $val['istri'] = $request->istri;
+        }
+
+        if ($request->suami) {
+            $val['suami'] = $request->suami;
+        }
+
         $data->family = json_encode($val, JSON_UNESCAPED_UNICODE);
         $data->study = json_encode([$request->study], JSON_UNESCAPED_UNICODE);
         if ($request->job) {
@@ -421,7 +431,6 @@ class Lpk extends Controller
 
         $da = compact('data', 'name', 'doc', 'pile');
         $pdf = Pdf::loadView('pdf.cv', $da);
-        // return view('pdf.cv',$da);
         // return $pdf->stream();
         Storage::disk('public')->put($path, $pdf->output());
 

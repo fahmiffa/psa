@@ -147,37 +147,46 @@
                                     <th>Nama</th>
                                     <th>Dokumen</th>
                                     <th>Kontrak</th>
+                                    <th>Japan</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($job->come as $item)
-                                    @if ($item->pay)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->user->name }}</td>
-                                            <td>
-                                                <a href="{{ route('apply.company.doc', ['id' => md5($item->user->id)]) }}"
-                                                    class="btn btn-sm btn-secondary rounded-pill">Dokumen</a>
-                                            </td>
-                                            <td>
-                                                @if ($item->spk)
-                                                    <a target="_blank" href="{{ asset('storage/' . $item->spk) }}"
-                                                        class="btn btn-primary btn-sm rounded-pill">File</a>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($item->heads->work == 1)
-                                                    <button type="button"
-                                                        class="btn btn-sm btn-success rounded-pill">Telah ke Jepang</button>
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->user->name }}</td>
+                                        <td>
+                                            <a href="{{ route('apply.company.doc', ['id' => md5($item->user->id)]) }}"
+                                                class="btn btn-sm btn-secondary rounded-pill">Dokumen</a>
+                                        </td>
+                                        <td>
+                                            @if ($item->spk)
+                                                <a target="_blank" href="{{ asset('storage/' . $item->spk) }}"
+                                                    class="btn btn-primary btn-sm rounded-pill">File</a>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($item->heads->japan)
+                                            {{ date('Y-m-d',strtotime($item->heads->japan)) }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($item->heads->work == 1)
+                                                @if ($item->heads->japan)
+                                                    <button type="button" class="btn btn-sm btn-success rounded-pill">Done</button>
                                                 @else
-                                                    <button type="button" class="btn btn-sm btn-primary rounded-pill"
+                                                    <button type="button" class="btn btn-sm btn-success rounded-pill"
                                                         data-bs-toggle="modal"
-                                                        href="#ver{{ $item->id }}">Verifikasi</button>
+                                                        href="#go{{ $item->id }}">Karantina</button>
                                                 @endif
-                                            </td>
-                                        </tr>
-                                    @endif
+                                            @else
+                                                <button type="button" class="btn btn-sm btn-primary rounded-pill"
+                                                    data-bs-toggle="modal"
+                                                    href="#ver{{ $item->id }}">Verifikasi</button>
+                                            @endif
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -205,7 +214,37 @@
                                             <form action="{{ route('job.approve', ['id' => md5($item->head)]) }}"
                                                 method="post" enctype="multipart/form-data">
                                                 @csrf
-                                                <p>Anda akan menerima kontrak & melanjutkan keberangkatan ?</p>
+                                                <p>Anda akan menerima kontrak & melanjutkan Karantina ?</p>
+                                                <div class="d-flex justify-content-start">
+                                                    <button class="btn btn-success rounded-pill">Setuju</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="go{{ $item->id }}" data-bs-backdrop="static"
+                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Go to Japan</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="container">
+                                            <form action="{{ route('job.approve', ['id' => md5($item->head)]) }}"
+                                                method="post" enctype="multipart/form-data">
+                                                @csrf
+                                                <p>Anda akan melanjutkan keberangkatan ?</p>
+                                                <div class="form-group">
+                                                    <label>Tanggal Berangkat</label>
+                                                    <input type="date" name="date" class="form-control" required>
+                                                </div>
                                                 <div class="d-flex justify-content-start">
                                                     <button class="btn btn-success rounded-pill">Setuju</button>
                                                 </div>

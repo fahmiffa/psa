@@ -123,7 +123,7 @@ class JobController extends Controller
 
         foreach ($job->come as $value) {
             $apply = Apply::where('id', $value->id)->where('status', 3)->first();
-            if ($apply && $apply->pay) {
+            if ($apply) {
                 $head = Head::where('id', $apply->head)->first();
                 if ($head) {
                     $st = $apply->user->stat;
@@ -155,7 +155,7 @@ class JobController extends Controller
     public function kontrakApprove(Request $request, $id)
     {
         $head = Head::where(DB::raw('md5(id)'), $id)->first();
-        if ($head->status == 2) {
+        if ($head->status == 2 && $head->apply->spk != null) {
             $st = $head->user->stat;
             $var = ($head->murid->lpk) ? 13 : $st + 1;
 
@@ -166,7 +166,19 @@ class JobController extends Controller
             $head->status = 1;
             $head->save();
             Alert::success('success', 'Approve success');
-        } else {
+        } 
+        else if($head->status == 1)
+        {
+            $var = $head->user->stat + 1;
+
+            $head->japan = $request->date;
+            $head->save();
+
+            Status::grade($head, 'Peserta ' . $head->user->name.' Berangkat ke Japan', $var);
+            Status::log('Berangkat ke japan, Peserta ' . $head->user->name . ' di ' . $head->apply->job->perusahaan->name, $head->apply->job->id, 'go');
+            Alert::success('success', 'Go To Japan success');
+        }
+        else {
             Alert::error('error', 'Dokumen Kontrak tidak Tersedia');
         }
         return back();

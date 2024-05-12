@@ -45,7 +45,7 @@ class VerifController extends Controller
             $student->kelas   = $request->kelas;
             $student->save();
 
-            Status::log('Verifikasi kelas '.$student->class->name); 
+            Status::log('Verifikasi kelas '.$student->class->name. ' Peserta '.$head->user->name); 
             Alert::success('success', 'Update Successfully');
         }
         else

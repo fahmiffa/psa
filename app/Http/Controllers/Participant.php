@@ -28,12 +28,13 @@ class Participant extends Controller
 {
     public function __construct()
     {
-        $this->middleware('IsRole:peserta');
+        $this->middleware('IsRole:mandiri');
     }
 
     public function study()
     {
         $head = Head::where('participant', Auth::user()->id)->where('status', '!=', 1)->first();
+
         if ($head) {
             return redirect()->route('daftar.index', ['id' => md5($head->id)]);
         } else {
@@ -45,12 +46,12 @@ class Participant extends Controller
             $kelas = Kelas::where('name', 'Online Class')->first();
             $class = Kelas::all();
             $da = Payment::all();
-            $paymentStudy = Payment::first();
-            $paymentDoc = Payment::where('id', 2)->first();
-            $paymentJob = Payment::where('id', 3)->first();
+            $payment1 = Payment::first();
+            $payment2 = Payment::where('id', 2)->first();
+            $payment3 = Payment::where('id', 3)->first();
             $exam = Exam::first();
-            $data = 'Pembayaran Pendidikan';
-            return view('participant.index', compact('data', 'class', 'kelas', 'da', 'head', 'payment', 'paymentStudy'));
+            $data = null;
+            return view('participant.index', compact('data', 'class', 'kelas', 'da', 'head', 'payment', 'payment1','payment2','payment3'));
 
         }
     }
@@ -66,7 +67,7 @@ class Participant extends Controller
     public function daftar($id)
     {
         $users = Auth::user()->id;
-        $head = Head::where('participant', $users)->whereNotIn('status', [0, 1])->first();
+        $head = Head::where('participant', $users)->latest()->first();
         $student = Student::where('student', $users)->latest()->first();
 
         $apply = Apply::where('users_id', $users)->latest()->first();
@@ -75,11 +76,11 @@ class Participant extends Controller
         $job = Job::where('status', 1)->where('self', 1)->get();
         $st = (int) Auth::user()->stat;
 
-        $paymentStudy = Payment::first();
-        $paymentDoc = Payment::where('id', 2)->first();
-        $paymentJob = Payment::where('id', 3)->first();
+        $payment1 = Payment::first();
+        $payment2 = Payment::where('id', 2)->first();
+        $payment3 = Payment::where('id', 3)->first();
         $data = 'Status';
-        return view('participant.index', compact('data', 'paymentDoc', 'paymentStudy', 'paymentJob', 'head', 'da', 'exam', 'job', 'apply', 'student'));
+        return view('participant.index', compact('data', 'payment2', 'payment1', 'payment3', 'head', 'da', 'exam', 'job', 'apply', 'student'));
 
     }
 
@@ -163,7 +164,7 @@ class Participant extends Controller
                 $apply->save();
 
                 Status::grade($head, 'Apply Job', $var);
-                Status::log('Apply Job ' . $job->name, $job->id, 'job');
+                Status::log('Apply Job ' . $job->name. ' Peserta '.$head->user->name, $job->id, 'job');
                 return redirect()->route('daftar.index', ['id' => md5($head->id)]);
 
             }
@@ -223,7 +224,7 @@ class Participant extends Controller
                 $paid->save();
 
                 Status::grade($head, 'Pembayaran ' . $payment->name, $var);
-                Status::log('Pembayaran ' . $payment->name, $payment->id, 'payment');
+                Status::log('Pembayaran ' . $payment->name.' Peserta '.$head->user->name, $payment->id, 'payment');
 
                 return redirect()->route('daftar.index', ['id' => md5($head->id)]);
             } else {
@@ -261,7 +262,7 @@ class Participant extends Controller
             $paid->save();
 
             Status::grade($head, 'Pembayaran ' . $payment->name, $var);
-            Status::log('Pembayaran ' . $payment->name, $payment->id, 'payment');
+            Status::log('Pembayaran ' . $payment->name.' Peserta '.$head->user->name , $payment->id, 'payment');
 
             return redirect()->route('daftar.index', ['id' => md5($head->id)]);
         }

@@ -308,6 +308,26 @@ if($doc)
     <td  style="border: 1px solid black;"></td>       
   </tr>
   @endisset
+
+  @isset($val->istri)
+  <tr>
+    <td style="border: 1px solid black;">Istri</td>
+    @foreach ($val->istri as $item)        
+    <td  style="border: 1px solid black;">{{$item}}</td>        
+    @endforeach  
+    <td  style="border: 1px solid black;"></td>       
+  </tr>
+  @endisset
+
+  @isset($val->suami)
+  <tr>
+    <td style="border: 1px solid black;">Suami</td>
+    @foreach ($val->suami as $item)        
+    <td  style="border: 1px solid black;">{{$item}}</td>        
+    @endforeach  
+    <td  style="border: 1px solid black;"></td>       
+  </tr>
+  @endisset
 </table>
 
 </body>
